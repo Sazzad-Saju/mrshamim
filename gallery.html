@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+
+    <!-- Metas -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="keywords" content="Portfolio Md.Mustafijur Rahman Shamim" />
+    <meta name="description" content="Shamim - CEO " />
+    <meta name="author" content="" />
+
+    <!-- Title  -->
+    <title>Gallery | Md. Mustafijur Rahman Shamim</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="img/favicon.ico" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Comfortaa:700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
+    <!-- Plugins -->
+    <link rel="stylesheet" href="css/plugins.css" />
+
+    <!-- Core Style Css -->
+    <link rel="stylesheet" href="css/style.css" />
+
+    <!-- custom css -->
+    <link rel="stylesheet" href="css/custom.css" />
+
+    <style>
+        .gallery-title {
+            padding: 80px 0 32px;
+            text-align: center;
+        }
+
+        .gallery-title h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+            margin: 0;
+            color: #222;
+        }
+
+        .gallery-title p {
+            margin: 18px auto 0;
+            max-width: 640px;
+            color: #6f6f6f;
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        .gallery-grid-section {
+            padding: 0 0 80px;
+        }
+
+
+        .gallery-item-image {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gallery-item-link {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            text-indent: -9999px;
+        }
+
+        .gallery-item-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.18);
+            opacity: 0;
+            transition: opacity 0.25s ease;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .gallery-item:hover .gallery-item-overlay {
+            opacity: 1;
+        }
+
+        .gallery-item-overlay .icon {
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.55);
+            color: #fff;
+            font-size: 1.1rem;
+        }
+
+        .image-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.75);
+            padding: 24px;
+            overflow: auto;
+        }
+
+        .image-modal.open {
+            display: flex;
+            animation: image-modal-fade 0.25s ease;
+        }
+
+        .image-modal-content {
+            position: relative;
+            max-width: 1100px;
+            width: 100%;
+            border-radius: 24px;
+            overflow: hidden;
+            background: #111;
+            transform: scale(0.95);
+            animation: image-modal-scale 0.25s ease forwards;
+        }
+
+        .image-modal-img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .image-modal-close {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: rgba(255, 255, 255, 0.12);
+            color: #fff;
+            border-radius: 50%;
+            font-size: 1.25rem;
+            line-height: 1;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        @keyframes image-modal-fade {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes image-modal-scale {
+            from {
+                transform: scale(0.95);
+            }
+
+            to {
+                transform: scale(1);
+            }
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+            gap: 24px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            display: block;
+            border-radius: 22px;
+            overflow: hidden;
+            background: #fff;
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 22px 48px rgba(0, 0, 0, 0.08);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.03);
+        }
+
+        .gallery-item-body {
+            padding: 18px 18px 22px;
+        }
+
+        .gallery-item-title {
+            margin: 0;
+            font-size: 1.05rem;
+            font-weight: 700;
+            line-height: 1.4;
+            color: #202020;
+        }
+
+        .gallery-item-caption {
+            margin: 10px 0 0;
+            color: #6f6f6f;
+            font-size: 0.94rem;
+            line-height: 1.7;
+        }
+
+        @media (min-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+
+        @media (min-width: 992px) {
+            .gallery-grid {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+            }
+        }
+
+        @media (min-width: 1300px) {
+            .gallery-grid {
+                grid-template-columns: repeat(5, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 576px) {
+            .gallery-title {
+                padding-top: 56px;
+            }
+
+            .gallery-item img {
+                height: 220px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =====================================
+        ==== Start Loading -->
+
+    <div class="loading">
+        <div class="text-center middle">
+            <div class="lds-ellipsis">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- End Loading ====
+        ======================================== -->
+
+    <!-- =====================================
+        ==== Start Navbar -->
+
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+
+            <!-- Logo -->
+            <a class="logo" href="index.html">
+                Shamim
+            </a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="icon-bar"><i class="fas fa-bars"></i></span>
+            </button>
+
+            <!-- navbar links -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- End Navbar ====
+        ======================================== -->
+
+    <main>
+        <section class="gallery-title">
+            <div class="container">
+                <h2>Gallery</h2>
+                <p>Clean, consistent, full-width image gallery with a single uniform grid layout.</p>
+            </div>
+        </section>
+
+        <section class="gallery-grid-section">
+            <div class="container-fluid px-4 px-lg-5">
+                <div class="gallery-grid">
+                    <article class="gallery-item">
+                        <div class="gallery-item-image">
+                            <img src="img/Gallary/7.jpg" alt="Boardroom Launch">
+                            <a class="gallery-item-link" href="img/Gallary/7.jpg" aria-label="Open full image"></a>
+                            <div class="gallery-item-overlay">
+                                <span class="icon icon-basic-eye"></span>
+                            </div>
+                        </div>
+                        <div class="gallery-item-body">
+                            <h3 class="gallery-item-title">Boardroom Launch</h3>
+                            <p class="gallery-item-caption">Early planning and leadership alignment.</p>
+                        </div>
+                    </article>
+                    <article class="gallery-item">
+                        <div class="gallery-item-image">
+                            <img src="img/Gallary/4.jpg" alt="Executive Review">
+                            <a class="gallery-item-link" href="img/Gallary/4.jpg" aria-label="Open full image"></a>
+                            <div class="gallery-item-overlay">
+                                <span class="icon icon-basic-eye"></span>
+                            </div>
+                        </div>
+                        <div class="gallery-item-body">
+                            <h3 class="gallery-item-title">Executive Review</h3>
+                            <p class="gallery-item-caption">Focused discussion with critical stakeholders.</p>
+                        </div>
+                    </article>
+                    <article class="gallery-item">
+                        <div class="gallery-item-image">
+                            <img src="img/Gallary/19.jpg" alt="Portrait Session">
+                            <a class="gallery-item-link" href="img/Gallary/19.jpg" aria-label="Open full image"></a>
+                            <div class="gallery-item-overlay">
+                                <span class="icon icon-basic-eye"></span>
+                            </div>
+                        </div>
+                        <div class="gallery-item-body">
+                            <h3 class="gallery-item-title">Portrait Session</h3>
+                            <p class="gallery-item-caption">Professional profile imagery for executive identity.</p>
+                        </div>
+                    </article>
+                    <article class="gallery-item">
+                        <div class="gallery-item-image">
+                            <img src="img/Gallary/2.jpg" alt="Market Dialogue" style="object-position: center 15%;">
+                            <a class="gallery-item-link" href="img/Gallary/2.jpg" aria-label="Open full image"></a>
+                            <div class="gallery-item-overlay">
+                                <span class="icon icon-basic-eye"></span>
+                            </div>
+                        </div>
+                        <div class="gallery-item-body">
+                            <h3 class="gallery-item-title">Market Dialogue</h3>
+                            <p class="gallery-item-caption">Engaged conversation in a polished setting.</p>
+                        </div>
+                    </article>
+                    <article class="gallery-item">
+                        <div class="gallery-item-image">
+                            <img src="img/Gallary/18.jpg" alt="Strategy Briefing">
+                            <a class="gallery-item-link" href="img/Gallary/18.jpg" aria-label="Open full image"></a>
+                            <div class="gallery-item-overlay">
+                                <span class="icon icon-basic-eye"></span>
+                            </div>
+                        </div>
+                        <div class="gallery-item-body">
+                            <h3 class="gallery-item-title">Strategy Briefing</h3>
+                            <p class="gallery-item-caption">A measured look at directional planning.</p>
+                        </div>
+                    </article>
+                    <article class="gallery-item">
+                        <div class="gallery-item-image">
+                            <img src="img/Gallary/20.jpg" alt="Conference Moment">
+                            <a class="gallery-item-link" href="img/Gallary/20.jpg" aria-label="Open full image"></a>
+                            <div class="gallery-item-overlay">
+                                <span class="icon icon-basic-eye"></span>
+                            </div>
+                        </div>
+                        <div class="gallery-item-body">
+                            <h3 class="gallery-item-title">Conference Moment</h3>
+                            <p class="gallery-item-caption">A captured moment from a major event.</p>
+                        </div>
+                    </article>
+                    <article class="gallery-item">
+                        <div class="gallery-item-image">
+                            <img src="img/Gallary/8.jpg" alt="Client Exchange">
+                            <a class="gallery-item-link" href="img/Gallary/8.jpg" aria-label="Open full image"></a>
+                            <div class="gallery-item-overlay">
+                                <span class="icon icon-basic-eye"></span>
+                            </div>
+                        </div>
+                        <div class="gallery-item-body">
+                            <h3 class="gallery-item-title">Client Exchange</h3>
+                            <p class="gallery-item-caption">A meaningful collaboration scene.</p>
+                        </div>
+                    </article>
+                    <article class="gallery-item">
+                        <div class="gallery-item-image">
+                            <img src="img/Gallary/9.jpg" alt="Leadership Gathering">
+                            <a class="gallery-item-link" href="img/Gallary/9.jpg" aria-label="Open full image"></a>
+                            <div class="gallery-item-overlay">
+                                <span class="icon icon-basic-eye"></span>
+                            </div>
+                        </div>
+                        <div class="gallery-item-body">
+                            <h3 class="gallery-item-title">Leadership Gathering</h3>
+                            <p class="gallery-item-caption">Team alignment with strong leadership presence.</p>
+                        </div>
+                    </article>
+                    <article class="gallery-item">
+                        <div class="gallery-item-image">
+                            <img src="img/Gallary/10.jpg" alt="Creative Direction">
+                            <a class="gallery-item-link" href="img/Gallary/10.jpg" aria-label="Open full image"></a>
+                            <div class="gallery-item-overlay">
+                                <span class="icon icon-basic-eye"></span>
+                            </div>
+                        </div>
+                        <div class="gallery-item-body">
+                            <h3 class="gallery-item-title">Creative Direction</h3>
+                            <p class="gallery-item-caption">Visual thinking for brand and presentation.</p>
+                        </div>
+                    </article>
+                    <article class="gallery-item">
+                        <div class="gallery-item-image">
+                            <img src="img/Gallary/21.jpg" alt="Project Review">
+                            <a class="gallery-item-link" href="img/Gallary/21.jpg" aria-label="Open full image"></a>
+                            <div class="gallery-item-overlay">
+                                <span class="icon icon-basic-eye"></span>
+                            </div>
+                        </div>
+                        <div class="gallery-item-body">
+                            <h3 class="gallery-item-title">Project Review</h3>
+                            <p class="gallery-item-caption">A calm exploration of active project details.</p>
+                        </div>
+                    </article>
+                    <article class="gallery-item">
+                        <div class="gallery-item-image">
+                            <img src="img/Gallary/11.jpg" alt="Assembly Space">
+                            <a class="gallery-item-link" href="img/Gallary/11.jpg" aria-label="Open full image"></a>
+                            <div class="gallery-item-overlay">
+                                <span class="icon icon-basic-eye"></span>
+                            </div>
+                        </div>
+                        <div class="gallery-item-body">
+                            <h3 class="gallery-item-title">Assembly Space</h3>
+                            <p class="gallery-item-caption">An architectural view of collaborative space.</p>
+                        </div>
+                    </article>
+                    <article class="gallery-item">
+                        <div class="gallery-item-image">
+                            <img src="img/Gallary/22.jpg" alt="Executive Moment">
+                            <a class="gallery-item-link" href="img/Gallary/22.jpg" aria-label="Open full image"></a>
+                            <div class="gallery-item-overlay">
+                                <span class="icon icon-basic-eye"></span>
+                            </div>
+                        </div>
+                        <div class="gallery-item-body">
+                            <h3 class="gallery-item-title">Executive Moment</h3>
+                            <p class="gallery-item-caption">A refined representation of senior decision-making.</p>
+                        </div>
+                    </article>
+                    <article class="gallery-item">
+                        <div class="gallery-item-image">
+                            <img src="img/Gallary/15.jpg" alt="Creative Framework">
+                            <a class="gallery-item-link" href="img/Gallary/15.jpg" aria-label="Open full image"></a>
+                            <div class="gallery-item-overlay">
+                                <span class="icon icon-basic-eye"></span>
+                            </div>
+                        </div>
+                        <div class="gallery-item-body">
+                            <h3 class="gallery-item-title">Creative Framework</h3>
+                            <p class="gallery-item-caption">A strong visual signal with modern tone.</p>
+                        </div>
+                    </article>
+                    <article class="gallery-item">
+                        <div class="gallery-item-image">
+                            <img src="img/Gallary/6.jpg" alt="Corporate Landscape">
+                            <a class="gallery-item-link" href="img/Gallary/6.jpg" aria-label="Open full image"></a>
+                            <div class="gallery-item-overlay">
+                                <span class="icon icon-basic-eye"></span>
+                            </div>
+                        </div>
+                        <div class="gallery-item-body">
+                            <h3 class="gallery-item-title">Corporate Landscape</h3>
+                            <p class="gallery-item-caption">Wide-angle composition for business space.</p>
+                        </div>
+                    </article>
+                    <article class="gallery-item">
+                        <div class="gallery-item-image">
+                            <img src="img/Gallary/23.jpg" alt="Team Alignment">
+                            <a class="gallery-item-link" href="img/Gallary/23.jpg" aria-label="Open full image"></a>
+                            <div class="gallery-item-overlay">
+                                <span class="icon icon-basic-eye"></span>
+                            </div>
+                        </div>
+                        <div class="gallery-item-body">
+                            <h3 class="gallery-item-title">Team Alignment</h3>
+                            <p class="gallery-item-caption">A shared moment of purpose and coordination.</p>
+                        </div>
+                    </article>
+                    <article class="gallery-item">
+                        <div class="gallery-item-image">
+                            <img src="img/Gallary/12.jpg" alt="Business Planning">
+                            <a class="gallery-item-link" href="img/Gallary/12.jpg" aria-label="Open full image"></a>
+                            <div class="gallery-item-overlay">
+                                <span class="icon icon-basic-eye"></span>
+                            </div>
+                        </div>
+                        <div class="gallery-item-body">
+                            <h3 class="gallery-item-title">Business Planning</h3>
+                            <p class="gallery-item-caption">Detailed planning in a structured environment.</p>
+                        </div>
+                    </article>
+                    <article class="gallery-item">
+                        <div class="gallery-item-image">
+                            <img src="img/Gallary/13.jpg" alt="Strategic Review">
+                            <a class="gallery-item-link" href="img/Gallary/13.jpg" aria-label="Open full image"></a>
+                            <div class="gallery-item-overlay">
+                                <span class="icon icon-basic-eye"></span>
+                            </div>
+                        </div>
+                        <div class="gallery-item-body">
+                            <h3 class="gallery-item-title">Strategic Review</h3>
+                            <p class="gallery-item-caption">Focus and precision in a formal review setting.</p>
+                        </div>
+                    </article>
+                    <article class="gallery-item">
+                        <div class="gallery-item-image">
+                            <img src="img/Gallary/14.jpg" alt="Vision Session">
+                            <a class="gallery-item-link" href="img/Gallary/14.jpg" aria-label="Open full image"></a>
+                            <div class="gallery-item-overlay">
+                                <span class="icon icon-basic-eye"></span>
+                            </div>
+                        </div>
+                        <div class="gallery-item-body">
+                            <h3 class="gallery-item-title">Vision Session</h3>
+                            <p class="gallery-item-caption">A fresh view on future opportunities.</p>
+                        </div>
+                    </article>
+                    <article class="gallery-item">
+                        <div class="gallery-item-image">
+                            <img src="img/Gallary/24.jpg" alt="Executive Dialogue">
+                            <a class="gallery-item-link" href="img/Gallary/24.jpg" aria-label="Open full image"></a>
+                            <div class="gallery-item-overlay">
+                                <span class="icon icon-basic-eye"></span>
+                            </div>
+                        </div>
+                        <div class="gallery-item-body">
+                            <h3 class="gallery-item-title">Executive Dialogue</h3>
+                            <p class="gallery-item-caption">A poised moment between senior leaders.</p>
+                        </div>
+                    </article>
+                    <article class="gallery-item">
+                        <div class="gallery-item-image">
+                            <img src="img/Gallary/25.jpg" alt="Operations Snapshot">
+                            <a class="gallery-item-link" href="img/Gallary/25.jpg" aria-label="Open full image"></a>
+                            <div class="gallery-item-overlay">
+                                <span class="icon icon-basic-eye"></span>
+                            </div>
+                        </div>
+                        <div class="gallery-item-body">
+                            <h3 class="gallery-item-title">Operations Snapshot</h3>
+                            <p class="gallery-item-caption">A polished visual summary of day-to-day flow.</p>
+                        </div>
+                    </article>
+                    <article class="gallery-item">
+                        <div class="gallery-item-image">
+                            <img src="img/Gallary/26.jpg" alt="Business Insight" style="object-position: center 20%;">
+                            <a class="gallery-item-link" href="img/Gallary/26.jpg" aria-label="Open full image"></a>
+                            <div class="gallery-item-overlay">
+                                <span class="icon icon-basic-eye"></span>
+                            </div>
+                        </div>
+                        <div class="gallery-item-body">
+                            <h3 class="gallery-item-title">Business Insight</h3>
+                            <p class="gallery-item-caption">A collected look at the executive perspective.</p>
+                        </div>
+                    </article>
+                    <article class="gallery-item">
+                        <div class="gallery-item-image">
+                            <img src="img/Gallary/27.jpg" alt="Industry Perspective">
+                            <a class="gallery-item-link" href="img/Gallary/27.jpg" aria-label="Open full image"></a>
+                            <div class="gallery-item-overlay">
+                                <span class="icon icon-basic-eye"></span>
+                            </div>
+                        </div>
+                        <div class="gallery-item-body">
+                            <h3 class="gallery-item-title">Industry Perspective</h3>
+                            <p class="gallery-item-caption">A clean, modern shot with professional tone.</p>
+                        </div>
+                    </article>
+                    <article class="gallery-item">
+                        <div class="gallery-item-image">
+                            <img src="img/Gallary/28.jpg" alt="Project Close-up">
+                            <a class="gallery-item-link" href="img/Gallary/28.jpg" aria-label="Open full image"></a>
+                            <div class="gallery-item-overlay">
+                                <span class="icon icon-basic-eye"></span>
+                            </div>
+                        </div>
+                        <div class="gallery-item-body">
+                            <h3 class="gallery-item-title">Project Close-up</h3>
+                            <p class="gallery-item-caption">A detailed look at a key project moment.</p>
+                        </div>
+                    </article>
+                    <!-- missing -->
+                    <article class="gallery-item">
+                        <div class="gallery-item-image">
+                            <img src="img/Gallary/1.jpg" alt="Project Close-up" style="object-position: center 20%;">
+                            <a class="gallery-item-link" href="img/Gallary/1.jpg" aria-label="Open full image"></a>
+                            <div class="gallery-item-overlay">
+                                <span class="icon icon-basic-eye"></span>
+                            </div>
+                        </div>
+                        <div class="gallery-item-body">
+                            <h3 class="gallery-item-title">Project Close-up</h3>
+                            <p class="gallery-item-caption">A detailed look at a key project moment.</p>
+                        </div>
+                    </article>
+                    <article class="gallery-item">
+                        <div class="gallery-item-image">
+                            <img src="img/Gallary/3.jpg" alt="Project Close-up">
+                            <a class="gallery-item-link" href="img/Gallary/3.jpg" aria-label="Open full image"></a>
+                            <div class="gallery-item-overlay">
+                                <span class="icon icon-basic-eye"></span>
+                            </div>
+                        </div>
+                        <div class="gallery-item-body">
+                            <h3 class="gallery-item-title">Project Close-up</h3>
+                            <p class="gallery-item-caption">A detailed look at a key project moment.</p>
+                        </div>
+                    </article>
+                    <article class="gallery-item">
+                        <div class="gallery-item-image">
+                            <img src="img/Gallary/5.jpg" alt="Project Close-up">
+                            <a class="gallery-item-link" href="img/Gallary/5.jpg" aria-label="Open full image"></a>
+                            <div class="gallery-item-overlay">
+                                <span class="icon icon-basic-eye"></span>
+                            </div>
+                        </div>
+                        <div class="gallery-item-body">
+                            <h3 class="gallery-item-title">Project Close-up</h3>
+                            <p class="gallery-item-caption">A detailed look at a key project moment.</p>
+                        </div>
+                    </article>
+                    <article class="gallery-item">
+                        <div class="gallery-item-image">
+                            <img src="img/Gallary/16.jpg" alt="Project Close-up">
+                            <a class="gallery-item-link" href="img/Gallary/16.jpg" aria-label="Open full image"></a>
+                            <div class="gallery-item-overlay">
+                                <span class="icon icon-basic-eye"></span>
+                            </div>
+                        </div>
+                        <div class="gallery-item-body">
+                            <h3 class="gallery-item-title">Project Close-up</h3>
+                            <p class="gallery-item-caption">A detailed look at a key project moment.</p>
+                        </div>
+                    </article>
+                    <article class="gallery-item">
+                        <div class="gallery-item-image">
+                            <img src="img/Gallary/17.jpg" alt="Project Close-up">
+                            <a class="gallery-item-link" href="img/Gallary/17.jpg" aria-label="Open full image"></a>
+                            <div class="gallery-item-overlay">
+                                <span class="icon icon-basic-eye"></span>
+                            </div>
+                        </div>
+                        <div class="gallery-item-body">
+                            <h3 class="gallery-item-title">Project Close-up</h3>
+                            <p class="gallery-item-caption">A detailed look at a key project moment.</p>
+                        </div>
+                    </article>
+                    <article class="gallery-item">
+                        <div class="gallery-item-image">
+                            <img src="img/Gallary/25.jpg" alt="Project Close-up">
+                            <a class="gallery-item-link" href="img/Gallary/25.jpg" aria-label="Open full image"></a>
+                            <div class="gallery-item-overlay">
+                                <span class="icon icon-basic-eye"></span>
+                            </div>
+                        </div>
+                        <div class="gallery-item-body">
+                            <h3 class="gallery-item-title">Project Close-up</h3>
+                            <p class="gallery-item-caption">A detailed look at a key project moment.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="image-modal" id="imageModal" aria-hidden="true">
+        <div class="image-modal-backdrop" data-close="modal"></div>
+        <div class="image-modal-content">
+            <button class="image-modal-close" aria-label="Close image modal">&times;</button>
+            <img src="" alt="Gallery image" class="image-modal-img">
+        </div>
+    </div>
+
+    <!-- =====================================
+        ==== Start Footer -->
+
+    <footer class="text-center wave wave-light pt-100">
+        <div class="container">
+            <div class="social">
+                <a href="https://www.facebook.com/share/19zEfCtuAg" class="icon">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://dev-sham3r.vercel.app" class="icon">
+                    <i class="fas fa-user"></i>
+                </a>
+            </div>
+
+            <p>&copy; 2026 Mustafijur Rahman. All Rights Reserved.</p>
+        </div>
+
+        <div class="wave-svg-top">
+            <svg class="curve-top" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2011 124.95">
+                <path class="cls-1" d="M0,21.19V85.31c459-96.95,631-38.73,1198,25.48S2011,0,2011,0H0Z" />
+            </svg>
+        </div>
+    </footer>
+
+    <!-- End Footer ====
+        ======================================= -->
+
+    <!-- jQuery -->
+    <script src="js/jquery-3.0.0.min.js"></script>
+    <script src="js/jquery-migrate-3.0.0.min.js"></script>
+
+    <!-- popper.min -->
+    <script src="js/popper.min.js"></script>
+
+    <!-- bootstrap -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- scrollIt -->
+    <script src="js/scrollIt.min.js"></script>
+
+    <!-- animated.headline -->
+    <script src="js/animated.headline.js"></script>
+
+    <!-- jquery.waypoints.min -->
+    <script src="js/jquery.waypoints.min.js"></script>
+
+    <!-- jquery.counterup.min -->
+    <script src="js/jquery.counterup.min.js"></script>
+
+    <!-- owl carousel -->
+    <script src="js/owl.carousel.min.js"></script>
+
+    <!-- jquery.magnific-popup js -->
+    <script src="js/jquery.magnific-popup.min.js"></script>
+
+    <!-- stellar js -->
+    <script src="js/jquery.stellar.min.js"></script>
+
+    <!-- isotope.pkgd.min js -->
+    <script src="js/isotope.pkgd.min.js"></script>
+
+    <!-- validator js -->
+    <script src="js/validator.js"></script>
+    <!-- toaster -->
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+    <!-- custom scripts -->
+    <script src="js/scripts.js"></script>
+    <script src="js/particles.min.js"></script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const modal = document.getElementById('imageModal');
+            const modalImg = modal.querySelector('.image-modal-img');
+            const closeButton = modal.querySelector('.image-modal-close');
+            const backdrop = modal.querySelector('[data-close="modal"]');
+            const links = document.querySelectorAll('.gallery-item-link');
+            function openModal(src, alt) {
+                modalImg.src = src;
+                modalImg.alt = alt;
+                modal.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            }
+            function closeModal() {
+                modal.classList.remove('open');
+                document.body.style.overflow = '';
+            }
+            links.forEach(function (link) {
+                link.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    openModal(link.href, link.closest('.gallery-item').querySelector('img').alt);
+                });
+            });
+            closeButton.addEventListener('click', closeModal);
+            backdrop.addEventListener('click', closeModal);
+            modal.addEventListener('click', function (event) {
+                if (event.target === modal) {
+                    closeModal();
+                }
+            });
+            document.addEventListener('keydown', function (event) {
+                if (event.key === 'Escape' && modal.classList.contains('open')) {
+                    closeModal();
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

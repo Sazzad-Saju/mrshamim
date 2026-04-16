@@ -187,3 +187,113 @@
     font-size: 115%!important;
 }
 
+.favorite-section {
+    position: relative;
+    overflow: hidden;
+}
+
+.favorite-section .favorite-subtitle {
+    max-width: 700px;
+    margin: 0 auto 35px;
+    color: #666;
+    font-size: 1rem;
+    line-height: 1.8;
+}
+
+.favorite-slider .item {
+    padding: 10px 8px;
+}
+
+.favorite-card {
+    position: relative;
+    min-height: 320px;
+    padding: 30px 25px;
+    border-radius: 28px;
+    background: #fff;
+    border: 1px solid rgba(34, 34, 34, 0.08);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.favorite-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 24px 50px rgba(0, 0, 0, 0.1);
+}
+
+.favorite-figure {
+    position: relative;
+    min-height: 200px;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    color: #fff;
+    text-align: center;
+    letter-spacing: 0.2px;
+    overflow: hidden;
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.favorite-figure::before {
+    content: '';
+    position: absolute;
+    top: -18px;
+    right: -18px;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.favorite-figure-label {
+    position: relative;
+    font-size: 1.05rem;
+    font-weight: 700;
+    max-width: 190px;
+}
+
+.favorite-content span {
+    display: block;
+    color: #777;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.78rem;
+    margin-bottom: 14px;
+}
+
+.favorite-content h5 {
+    font-size: 1.45rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0;
+    color: #222;
+}
+
+@media (max-width: 991px) {
+    .favorite-card {
+        min-height: 280px;
+        padding: 24px 20px;
+    }
+
+    .favorite-figure {
+        min-height: 180px;
+    }
+}
+
+@media (max-width: 575px) {
+    .favorite-subtitle {
+        font-size: 0.95rem;
+    }
+
+    .favorite-content h5 {
+        font-size: 1.25rem;
+    }
+}
+
