@@ -487,7 +487,7 @@ function validateContactForm() {
         return false;
     }
 
-   
+
     return true;
 }
 
@@ -495,10 +495,44 @@ document.getElementById("contactForm").addEventListener("submit", function (e) {
     e.preventDefault();
 
     const isValid = validateContactForm();
+    const name = document.getElementById("form_name").value.trim();
+    const email = document.getElementById("form_email").value.trim();
+    const subject = document.getElementById("form_subject").value.trim();
+    const message = document.getElementById("form_message").value.trim();
 
     if (isValid) {
-        // Later you can add your API call here
-        showToast("Your message is successfully sent.", "success");
+
+        // send api request
+        const data = {
+            name: name,
+            email: email,
+            subject: subject,
+            message: message
+        };
+
+        fetch('https://sattarmetal.com.bd/api/api/send-email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Failed to send email');
+            })
+            .then(data => {
+                showToast("Your message is successfully sent.", "success");
+            })
+            .catch(error => {
+                console.error(error);
+                showToast("There was an error sending your message.", "error");
+            });
+
+        // just show success toast
+        //showToast("Your message is successfully sent.", "success");
         this.reset();
     }
 });
