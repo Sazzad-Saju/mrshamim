@@ -989,7 +989,7 @@ footer p {
   }
 
   section {
-    padding: 120px 0 !important;
+    padding: 120px 0;
   }
 
   .hero, .services, .work, .contact {
